@@ -68,7 +68,9 @@ const handleSearchSubmit=(e)=>{
 	e.preventDefault()
 	const posts = patientRecordList.filter((d)=>{
 		return d.UserName === searchValue
+		
 	})
+	
 	setPatientRecordList(posts)
 }
   return (
