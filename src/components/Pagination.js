@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Pagination =({postsPerPage, totalPosts})=>{
+const Pagination =({postsPerPage, totalPosts, handlePage})=>{
 const pageNumbers =[];
 
 for (let i=1; i<=Math.ceil(totalPosts/postsPerPage); i++){
@@ -10,9 +10,11 @@ for (let i=1; i<=Math.ceil(totalPosts/postsPerPage); i++){
 
 
     return(
-        <div>
+        <div className='page-number'>
              {pageNumbers.map(number=>(
-                 <button>{number}</button>
+                 <button key={number} onClick={()=>handlePage(number)}>
+                     {number}
+                     </button>
              ))}
         </div>
     )

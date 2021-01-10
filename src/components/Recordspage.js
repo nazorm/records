@@ -1,22 +1,24 @@
 import React from 'react';
-
+import Record from './Record'
+import '../App.css'
 
 const Recordspage = ({patientrecords}) => {
 
-
-
+    const records = patientrecords.map((d, index)=>{
+return(
+    <Record
+    key ={index}
+    firstName ={d.FirstName}
+    lastName ={d.LastName}
+    />
+)
+    })
 
 	return (
 		<div>
-			{patientrecords.map( d =>(
-                <div className='record'>
-                <h1>{d.FirstName}</h1>
-                <h1>{d.LastName}</h1>
-                <h1>{d.Gender}</h1>
-                </div>
-            ))}
+            {records}
 		</div>
-	);
+	)
 };
 
 export default Recordspage;
