@@ -12,15 +12,20 @@ function App() {
 const fetchRecords = async()=>{
   setLoading(true);
   const res = await axios.get('http://api.enye.tech/v1/challenge/records');
-  setPatientRecordList(res.records)
-  setLoading(false)
+  setPatientRecordList(res.data.profiles)
+  console.log(patientRecordList)
+  setLoading(false);
 }
 fetchRecords()
-	})
+  },[]);
+  //get current posts
+  const indexofLastPost = currentPage*postsPerPage;
+  const indexofFirstPost = indexofLastPost- postsPerPage;
+  const currentPosts = patientRecordList.slice(indexofFirstPost, indexofLastPost)
 	return (
 		<div className="App">
 			<h1>Patient Record</h1>
-			{loading ? <p>Loading...</p> : <Recordspage patientrecords={patientRecordList} />}
+			{loading ? <p>Loading...</p> : <Recordspage patientrecords={currentPosts} />}
 		</div>
 	);
 }

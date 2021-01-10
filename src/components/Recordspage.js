@@ -1,26 +1,22 @@
-import React, {useState} from 'react'
-import Record from './Record'
-
-const Recordspage=(props)=>{
-const [patientrecords] = useState(props)
+import React from 'react';
 
 
-    const records = patientrecords.map((d)=>{
-        return(
-            <Record
-            firstName = {d.FirstName}
-            
-            
-            />
-        )
-    })
-    return(
-        <div>
-            <h1>records</h1>
-            {records}
-        </div>
-    )
-}
+const Recordspage = ({patientrecords}) => {
 
 
-export default Recordspage
+
+
+	return (
+		<div>
+			{patientrecords.map( d =>(
+                <div className='record'>
+                <h1>{d.FirstName}</h1>
+                <h1>{d.LastName}</h1>
+                <h1>{d.Gender}</h1>
+                </div>
+            ))}
+		</div>
+	);
+};
+
+export default Recordspage;
