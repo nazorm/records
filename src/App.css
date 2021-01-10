@@ -12,7 +12,7 @@
 .filter-container{
     text-align: start; 
 }
-select{
+select, .search-form input{
     display: block;
     margin: 10px 0;
 }
@@ -61,7 +61,7 @@ line-height: 1.6;
 .detail-parent{
     color: skyblue;
 }
-@media only screen and (min-width:700px){
+@media only screen and (min-width:900px){
     .header{
         display: flex;
         justify-content: space-between;
