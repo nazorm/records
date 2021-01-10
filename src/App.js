@@ -9,6 +9,7 @@ function App() {
 	const [loading, setLoading] = useState(false);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [postsPerPage] = useState(20);
+	const [searchValue, setSearchValue]= useState('')
 
 	useEffect(() => {
 const fetchRecords = async()=>{
@@ -57,13 +58,27 @@ const posts = patientRecordList.filter((d)=>{
 })
 setPatientRecordList(posts)
  }
- //handle credit card filter
 
+ //handle search filter
+ const handleSearchChange = (e)=>{
+	 const {value}= e.target;
+	 setSearchValue(value)
+ }
+const handleSearchSubmit=(value)=>{
+	const posts = patientRecordList.filter((d)=>{
+		return d.UserName === value
+	})
+	setPatientRecordList(posts)
+}
   return (
 		<div className="App">
 			<div className='header'>
 			<h1 className='file-name'>Patient Records</h1>
 			<div className='filter-container'>
+				<form onSubmit={handleSearchSubmit} className='search-form'>
+					<input type='text' value={searchValue}placeholder='Search Specific User' onChange={handleSearchChange}/>
+					<button onClick={handleSearchSubmit} className='search-btn'>Search</button>
+				</form>
 			<Filter
 			handleGenderChange={handleGenderChange}
 			handlePaymentChange={handlePaymentChange}

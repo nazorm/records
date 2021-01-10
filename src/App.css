@@ -17,7 +17,7 @@ select{
     margin: 10px 0;
 }
 
-.reset-btn{
+.reset-btn, .search-btn{
 padding:5px;
 border-radius: 5px;
 }
@@ -73,7 +73,7 @@ line-height: 1.6;
     .filter-container{
         display: flex;
     }
-    select{
+    select, .search-form input{
         display: inline;
         margin: 0 10px;
     }
