@@ -8,12 +8,14 @@ const Recordspage = ({patientrecords}) => {
 return(
     <Record
     key ={index}
+    url = {d.URL}
     firstname ={d.FirstName}
     lastname ={d.LastName}
     username = {d.UserName}
     gender = {d.Gender}
+    creditcard = {d.CreditCardType}
     phonenumber ={d.PhoneNumber}
-    paymentnethod={d.PaymentMethod}
+    paymentmethod={d.PaymentMethod}
     lastlogin = {d.LastLogin}
     />
 )
