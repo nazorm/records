@@ -31,7 +31,7 @@ fetchRecords()
  
   return (
 		<div className="App">
-			<h1>Patient Record</h1>
+			<h1>Patient Records</h1>
 			{loading ? <p>Loading...</p> : <Recordspage patientrecords={currentPosts} />}
 			<Pagination
 			 postsPerPage={postsPerPage} 
