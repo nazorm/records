@@ -1,39 +1,54 @@
+@import '~antd/dist/antd.css';
+
 * {
 	box-sizing: border-box;
 	margin: 0;
 	padding: 1px;
 }
-.header{
-   text-align: center;
+.header {
+	text-align: center;
 }
-.file-name{
-  font-size: 18px;
+.file-name {
+	font-size: 18px;
 }
-.filter-container{
-    text-align: start; 
+.filter-container {
+	text-align: start;
 }
-select, .search-form input{
-    display: block;
-    margin: 10px 0;
+.select-container {
+	margin: 5px 0;
 }
-
-.reset-btn, .search-btn{
-padding:5px;
-border-radius: 5px;
+.label {
+	margin: 0 5px;
+}
+.search {
+	width: 200px;
+}
+.search::placeholder {
+	font-weight: 500;
+}
+.reset-btn {
+	padding: 5px;
+	width: 60px;
+	border-radius: 5px;
+	align-self: center;
+}
+.note {
+	text-align: end;
 }
 .page-number {
-    border: 3px solid skyblue;
-    border-radius: 5px;
-    margin: 20px 0 10px;
-    display: flex;
-    justify-content: space-evenly;
+	border: 3px solid skyblue;
+	border-radius: 5px;
+	margin: 20px 0 10px;
+	display: flex;
+	justify-content: space-evenly;
 }
 .page-number-button {
 	margin: 5px 0;
-    padding: 8px 12px;
-    font-weight: 18px;
+	padding: 8px 12px;
+	font-weight: 18px;
 }
-.page-number-button:hover, .record:hover, select:hover {
+.page-number-button:hover,
+.record:hover {
 	opacity: 0.5;
 	cursor: pointer;
 }
@@ -43,38 +58,47 @@ border-radius: 5px;
 	box-shadow: none;
 	color: white;
 }
-.record{
-    width: 100%;
-    display: block;
-    text-decoration: none;
-    border: 1px solid rgba(0, 0, 0, 0.5);
-    border-radius: 10px ;
-    margin: 20px 0;
-    padding: 10px;
+.record-container {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	grid-gap: 16px;
 }
-.patient-name, .detail{
-color: black;
+.record {
+	width: 100%;
+	display: block;
+	text-decoration: none;
+	border: 1px solid rgba(0, 0, 0, 0.5);
+	border-radius: 10px;
+	margin: 20px 0;
+	padding: 10px;
 }
-.details{
-line-height: 1.6;
+.patient-name,
+.detail {
+	color: black;
 }
-.detail-parent{
-    color: skyblue;
+.details {
+	line-height: 1.6;
 }
-@media only screen and (min-width:900px){
-    .header{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .file-name{
-        font-size: 30px;
-      }
-    .filter-container{
-        display: flex;
-    }
-    select, .search-form input{
-        display: inline;
-        margin: 0 10px;
-    }
+.detail-parent {
+	color: skyblue;
+}
+@media only screen and (min-width: 900px) {
+	.header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	.select-container {
+		margin: 0;
+	}
+	.file-name {
+		font-size: 30px;
+	}
+	.filter-container {
+		display: flex;
+	}
+	.record-container {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	}
 }
