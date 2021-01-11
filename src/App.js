@@ -65,7 +65,7 @@ function App() {
 	//handle search
 	const handleSearchSubmit = () => {
 		const user = patientRecordList.filter((users) => {
-			return users.UserName === searchValue;
+			return users.UserName.toLowerCase() === searchValue.toLowerCase();
 		});
 		setPatientRecordList(user);
 	};
@@ -92,7 +92,6 @@ function App() {
 			<div className="note">
 				<ul className="ul">
 					<li className="li">Reset before a second filter</li>
-					<li className="li">Username is case sensitive</li>
 				</ul>
 			</div>
 
