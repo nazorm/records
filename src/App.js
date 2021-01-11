@@ -14,7 +14,7 @@ function App() {
 	useEffect(() => {
 const fetchRecords = async()=>{
   setLoading(true);
-  const res = await axios.get('http://api.enye.tech/v1/challenge/records');
+  const res = await axios.get('https://api.enye.tech/v1/challenge/records');
   setPatientRecordList(res.data.records.profiles)
   setLoading(false);
 }
@@ -37,7 +37,7 @@ fetchRecords()
   //handle Resst
 	const fetchResetData = async()=>{
 		setLoading(true);
-		const res = await axios.get('http://api.enye.tech/v1/challenge/records');
+		const res = await axios.get('https://api.enye.tech/v1/challenge/records');
 		setPatientRecordList(res.data.records.profiles)
 		setLoading(false);
   }
