@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Button, Input } from 'antd';
 import './App.css';
-import Pagination from './components/Pagination';
+import Paginationbtn from './components/Pagination';
 import Recordspage from './components/Recordspage';
 import Filter from './components/Filter';
 const { Search } = Input;
+
 function App() {
 	const [patientRecordList, setPatientRecordList] = useState([]);
 	const [loading, setLoading] = useState(false);
@@ -31,8 +32,10 @@ function App() {
 
 	//paginate
 	const handlePage = (number) => {
-		setCurrentPage(number);
+		const value = `${number}`;
+		setCurrentPage(value);
 	};
+
 	//handle Resst
 	const fetchResetData = async () => {
 		setLoading(true);
@@ -40,19 +43,21 @@ function App() {
 		setPatientRecordList(res.data.records.profiles);
 		setLoading(false);
 	};
+
 	//handle gender filter
 	const handleGenderChange = (e) => {
 		const value = `${e}`;
 		const posts = patientRecordList.filter((d) => {
-			return d.Gender === value;
+			return `${d.Gender}`.includes(value);
 		});
 		setPatientRecordList(posts);
 	};
+
 	//handle payment type filter
 	const handlePaymentChange = (e) => {
 		const value = `${e}`;
 		const posts = patientRecordList.filter((d) => {
-			return d.PaymentMethod === value;
+			return `${d.PaymentMethod}`.includes(value);
 		});
 		setPatientRecordList(posts);
 	};
@@ -65,7 +70,9 @@ function App() {
 	//handle search
 	const handleSearchSubmit = () => {
 		const user = patientRecordList.filter((users) => {
-			return users.UserName.toLowerCase() === searchValue.toLowerCase();
+			return `${users.UserName} ${users.FirstName} ${users.LastName}`
+				.toLowerCase()
+				.includes(searchValue.toLowerCase());
 		});
 		setPatientRecordList(user);
 	};
@@ -96,7 +103,7 @@ function App() {
 			</div>
 
 			{loading ? <p>Loading...</p> : <Recordspage patientrecords={currentPosts} />}
-			<Pagination postsPerPage={postsPerPage} totalPosts={patientRecordList.length} handlePage={handlePage} />
+			<Paginationbtn postsPerPage={postsPerPage} totalPosts={patientRecordList.length} handlePage={handlePage} />
 		</div>
 	);
 }
