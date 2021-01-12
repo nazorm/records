@@ -1,6 +1,9 @@
 import React from 'react';
 import '../App.css';
-const Redcord = (props) => {
+
+const Record = (props) => {
+	const date = new Date(`${props.lastlogin}`).toLocaleDateString();
+
 	return (
 		<a href={props.url} target="_blank" rel="noreferrer" className="record">
 			<h3 className="patient-name">
@@ -23,11 +26,11 @@ const Redcord = (props) => {
 					Payment Method: <span className="detail">{props.paymentmethod}</span>
 				</p>
 				<p className="detail-parent">
-					Last Login: <span className="detail">{props.lastlogin} </span>
+					Last Login: <span className="detail">{date}</span>
 				</p>
 			</div>
 		</a>
 	);
 };
 
-export default Redcord;
+export default Record;
