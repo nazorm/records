@@ -1,21 +1,22 @@
 import React from 'react';
+
+import { Pagination } from 'antd';
+
 import '../App.css';
-const Pagination = ({ postsPerPage, totalPosts, handlePage }) => {
+
+const Paginationbtn = ({ postsPerPage, totalPosts, handlePage }) => {
 	const pageNumbers = [];
 
-	for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
-		pageNumbers.push(i);
-	}
+	const displayPage = Math.ceil(totalPosts / postsPerPage);
+	pageNumbers.push(displayPage);
 
 	return (
 		<div className="page-number">
 			{pageNumbers.map((number) => (
-				<button className="page-number-button" key={number} onClick={() => handlePage(number)}>
-					{number}
-				</button>
+				<Pagination key={number} total={totalPosts} onChange={handlePage} />
 			))}
 		</div>
 	);
 };
 
-export default Pagination;
+export default Paginationbtn;
