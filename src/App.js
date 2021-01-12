@@ -7,6 +7,7 @@ import Recordspage from './components/Recordspage';
 import Filter from './components/Filter';
 const { Search } = Input;
 
+
 function App() {
 	const [patientRecordList, setPatientRecordList] = useState([]);
 	const [loading, setLoading] = useState(false);
@@ -69,12 +70,17 @@ function App() {
 	};
 	//handle search
 	const handleSearchSubmit = () => {
-		const user = patientRecordList.filter((users) => {
-			return `${users.UserName} ${users.FirstName} ${users.LastName}`
-				.toLowerCase()
-				.includes(searchValue.toLowerCase());
-		});
-		setPatientRecordList(user);
+		if (searchValue === '') {
+			alert('Enter Something to Search');
+			return;
+		} else {
+			const user = patientRecordList.filter((users) => {
+				return `${users.UserName} ${users.FirstName} ${users.LastName}`
+					.toLowerCase()
+					.includes(searchValue.toLowerCase());
+			});
+			setPatientRecordList(user);
+		}
 	};
 	return (
 		<div className="App">
@@ -84,7 +90,7 @@ function App() {
 					<Search
 						className="search"
 						value={searchValue}
-						placeholder="Search Username"
+						placeholder="Search Username, First Name, Last"
 						onChange={handleSearchChange}
 						onSearch={handleSearchSubmit}
 						enterButton
@@ -94,12 +100,6 @@ function App() {
 						Reset
 					</Button>
 				</div>
-			</div>
-
-			<div className="note">
-				<ul className="ul">
-					<li className="li">Reset before a second filter</li>
-				</ul>
 			</div>
 
 			{loading ? <p>Loading...</p> : <Recordspage patientrecords={currentPosts} />}
