@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Button, Input } from 'antd';
+import { Input, Button } from 'antd';
 import './App.css';
 import Paginationbtn from './components/Pagination';
 import Recordspage from './components/Recordspage';
 import Filter from './components/Filter';
 const { Search } = Input;
-
 
 function App() {
 	const [patientRecordList, setPatientRecordList] = useState([]);
@@ -14,22 +13,32 @@ function App() {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [postsPerPage] = useState(20);
 	const [searchValue, setSearchValue] = useState('');
+	const [filteredPost, setFilteredPost] = useState([]);
 
 	useEffect(() => {
 		const fetchRecords = async () => {
 			setLoading(true);
 			const res = await axios.get('https://api.enye.tech/v1/challenge/records');
 			setPatientRecordList(res.data.records.profiles);
+			setFilteredPost(res.data.records.profiles);
 			setLoading(false);
 		};
 
 		fetchRecords();
 	}, []);
 
+	//handle reset
+	const fetchResetRecords = async () => {
+		setLoading(true);
+		const res = await axios.get('https://api.enye.tech/v1/challenge/records');
+		setPatientRecordList(res.data.records.profiles);
+		setFilteredPost(res.data.records.profiles);
+		setLoading(false);
+	};
 	//get current posts
 	const indexofLastPost = currentPage * postsPerPage;
 	const indexofFirstPost = indexofLastPost - postsPerPage;
-	const currentPosts = patientRecordList.slice(indexofFirstPost, indexofLastPost);
+	const currentPosts = filteredPost.slice(indexofFirstPost, indexofLastPost);
 
 	//paginate
 	const handlePage = (number) => {
@@ -37,38 +46,22 @@ function App() {
 		setCurrentPage(value);
 	};
 
-	//handle Resst
-	const fetchResetData = async () => {
-		setLoading(true);
-		const res = await axios.get('https://api.enye.tech/v1/challenge/records');
-		setPatientRecordList(res.data.records.profiles);
-		setLoading(false);
-	};
-
-	//handle gender filter
-	const handleGenderChange = (e) => {
+	//handle select filter
+	const handleSelectChange = (e) => {
 		const value = `${e}`;
 		const posts = patientRecordList.filter((d) => {
-			return `${d.Gender}`.includes(value);
+			return `${d.Gender} ${d.PaymentMethod}`.includes(value);
 		});
-		setPatientRecordList(posts);
+		setFilteredPost(posts);
 	};
 
-	//handle payment type filter
-	const handlePaymentChange = (e) => {
-		const value = `${e}`;
-		const posts = patientRecordList.filter((d) => {
-			return `${d.PaymentMethod}`.includes(value);
-		});
-		setPatientRecordList(posts);
-	};
-
-	//handle search filter
+	//get search value
 	const handleSearchChange = (e) => {
 		const { value } = e.target;
 		setSearchValue(value);
 	};
-	//handle search
+
+	//handle search filter
 	const handleSearchSubmit = () => {
 		if (searchValue === '') {
 			alert('Enter Something to Search');
@@ -79,28 +72,35 @@ function App() {
 					.toLowerCase()
 					.includes(searchValue.toLowerCase());
 			});
-			setPatientRecordList(user);
+			setFilteredPost(user);
 		}
 	};
 	return (
 		<div className="App">
-			<div className="header">
+			<header className="header">
 				<h1 className="file-name">Patient Records</h1>
 				<div className="filter-container">
 					<Search
 						className="search"
 						value={searchValue}
 						placeholder="Search Username, First Name, Last"
+						allowClear
 						onChange={handleSearchChange}
 						onSearch={handleSearchSubmit}
 						enterButton
 					/>
-					<Filter handleGenderChange={handleGenderChange} handlePaymentChange={handlePaymentChange} />
-					<Button type="primary" className="reset-btn" onClick={() => fetchResetData()}>
+					<Filter handleSelectChange={handleSelectChange} />
+					<Button
+						type="primary"
+						className="reset-btn"
+						onClick={() => {
+							fetchResetRecords();
+						}}
+					>
 						Reset
 					</Button>
 				</div>
-			</div>
+			</header>
 
 			{loading ? <p>Loading...</p> : <Recordspage patientrecords={currentPosts} />}
 			<Paginationbtn postsPerPage={postsPerPage} totalPosts={patientRecordList.length} handlePage={handlePage} />
