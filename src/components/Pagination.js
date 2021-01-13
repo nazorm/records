@@ -13,7 +13,11 @@ const Paginationbtn = ({ postsPerPage, totalPosts, handlePage }) => {
 	return (
 		<div className="page-number">
 			{pageNumbers.map((number) => (
-				<Pagination key={number} total={totalPosts} onChange={handlePage} />
+				<Pagination key={number} 
+				pageSize={20}
+				total={totalPosts} 
+				showSizeChanger={false}
+				onChange={handlePage} />
 			))}
 		</div>
 	);
