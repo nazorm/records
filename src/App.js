@@ -135,7 +135,15 @@ function App() {
 			</header>
 
 			{loading ? <p>Loading...</p> : <Recordspage patientrecords={currentPosts} />}
-			<Paginationbtn postsPerPage={postsPerPage} totalPosts={patientRecordList.length} handlePage={handlePage} />
+			{loading ? (
+				''
+			) : (
+				<Paginationbtn
+					postsPerPage={postsPerPage}
+					totalPosts={patientRecordList.length}
+					handlePage={handlePage}
+				/>
+			)}
 		</div>
 	);
 }
