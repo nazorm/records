@@ -14,6 +14,7 @@ function App() {
 	const [postsPerPage] = useState(20);
 	const [searchValue, setSearchValue] = useState('');
 	const [filteredPost, setFilteredPost] = useState([]);
+	const [filters, setFilters] = useState({ name: '', gender: '', payment: '' });
 
 	useEffect(() => {
 		const fetchRecords = async () => {
@@ -46,13 +47,46 @@ function App() {
 		setCurrentPage(value);
 	};
 
-	//handle select filter
-	const handleSelectChange = (e) => {
+	//handle filters
+	const handleFilter = (newFilters) => {
+		let records = patientRecordList;
+		if (newFilters.gender) {
+			records = records.filter((record) => {
+				return record.Gender === newFilters.gender;
+			});
+		}
+
+		if (newFilters.payment) {
+			records = records.filter((record) => {
+				return record.PaymentMethod === newFilters.payment;
+			});
+		}
+
+		if (newFilters.name) {
+			records = records.filter((record) => {
+				return `${record.FirstName} ${record.LastName} ${record.UserName}`
+					.toLowerCase()
+					.includes(newFilters.name.toLowerCase());
+			});
+		}
+
+		setFilteredPost(records);
+	};
+
+	//handle gender filter
+	const handleGenderChange = (e) => {
 		const value = `${e}`;
-		const posts = patientRecordList.filter((d) => {
-			return `${d.Gender} ${d.PaymentMethod}`.includes(value);
-		});
-		setFilteredPost(posts);
+		const newFilters = { ...filters, gender: value };
+		setFilters(newFilters);
+		handleFilter(newFilters);
+	};
+
+	//handle payment filter
+	const handlePaymentChange = (e) => {
+		const value = `${e}`;
+		const newFilters = { ...filters, payment: value };
+		setFilters(newFilters);
+		handleFilter(newFilters);
 	};
 
 	//get search value
@@ -67,14 +101,12 @@ function App() {
 			alert('Enter Something to Search');
 			return;
 		} else {
-			const user = patientRecordList.filter((users) => {
-				return `${users.UserName} ${users.FirstName} ${users.LastName}`
-					.toLowerCase()
-					.includes(searchValue.toLowerCase());
-			});
-			setFilteredPost(user);
+			const newFilters = { ...filters, name: searchValue };
+			setFilters(newFilters);
+			handleFilter(newFilters);
 		}
 	};
+
 	return (
 		<div className="App">
 			<header className="header">
@@ -89,7 +121,7 @@ function App() {
 						onSearch={handleSearchSubmit}
 						enterButton
 					/>
-					<Filter handleSelectChange={handleSelectChange} />
+					<Filter handleGenderChange={handleGenderChange} handlePaymentChange={handlePaymentChange} />
 					<Button
 						type="primary"
 						className="reset-btn"
